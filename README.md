@@ -1,74 +1,46 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/N3kLi3ZO)
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=23640812&assignment_repo_type=AssignmentRepo)
-# Blockchain Dashboard Project
+# CryptoChain Analyzer Dashboard
 
-Use this repository to build your blockchain dashboard project.
-Update this README every week.
+Real-time Python dashboard that connects to a public Bitcoin blockchain API and
+displays live cryptographic metrics, plus an AI component that adds analytical
+value to the raw blockchain data.
 
-## Student Information
+Individual project — Cryptography, Universidad Alfonso X el Sabio
+(Prof. Jorge Calvo, 2025–26).
 
-| Field | Value |
-|---|---|
-| Gaizka Frutos | |
-| Gaizka8 | |
-| Dashboard Blockchain | |
-| Anomaly Detector | |
+## Student information
+- Name: Gaizka
+- GitHub username: *(pon aquí tu nombre de usuario de GitHub)*
 
-## Module Tracking
+## Chosen AI approach (M4)
+**Anomaly detector** on inter-block times. The expected baseline is an
+exponential distribution (Bitcoin's block production is a Poisson process with
+target mean 600 s). Blocks whose inter-arrival time is statistically abnormal
+are flagged — this may correlate with mining-pool behaviour.
+*(Se puede cambiar más adelante si decido otra opción.)*
 
-Use one of these values: `Not started`, `In progress`, `Done`
+## Module status
+- **M1 · Proof of Work Monitor** — not started
+- **M2 · Block Header Analyzer** — not started
+- **M3 · Difficulty History** — not started
+- **M4 · AI Component** — not started
 
-| Module | What it should include | Status |
-|---|---|---|
-| M1 | Proof of Work Monitor | Not started |
-| M2 | Block Header Analyzer | Not started |
-| M3 | Difficulty History | Not started |
-| M4 | AI Component | Not started |
-
-## Current Progress
-
-Write 3 to 5 short lines about what you have already done.
-
+## Current progress
 - Repository accepted from GitHub Classroom.
 - README initialised with project info and module status.
-- First API call implemented in api/blockchain_client.py — prints the latest
-block height, hash, difficulty, nonce, bits and transaction count from the
-Blockstream API.
+- First API call implemented in `api/blockchain_client.py` — prints the latest
+  block height, hash, difficulty, nonce, bits and transaction count from the
+  Blockstream API.
 
-## Next Step
-
-Write the next small step you will do before the next class.
-
-- Start M1 inside app.py using Streamlit: display the current difficulty and
+## Next step
+Start M1 inside `app.py` using Streamlit: display the current difficulty and
 visualise the leading-zero threshold in the 256-bit SHA-256 space.
 
-## Main Problem or Blocker
+## Main problem or blocker
+None yet.
 
-Write here if you are stuck with something.
-
-- None yet
-
-## How to Run
-
+## How to run
 ```bash
 pip install -r requirements.txt
 python api/blockchain_client.py      # quick sanity check
 streamlit run app.py                 # full dashboard (coming next)
-```
-
-## Project Structure
-
-```text
-template-blockchain-dashboard/
-|-- README.md
-|-- requirements.txt
-|-- .gitignore
-|-- app.py
-|-- api/
-|   `-- blockchain_client.py
-`-- modules/
-    |-- m1_pow_monitor.py
-    |-- m2_block_header.py
-    |-- m3_difficulty_history.py
-    `-- m4_ai_component.py
 ```
