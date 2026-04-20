@@ -9,9 +9,9 @@ Update this README every week.
 
 | Field | Value |
 |---|---|
-| Student Name | |
-| GitHub Username | |
-| Project Title | |
+| Gaizka Frutos | |
+| Gaizka8 | |
+| Dashboard Blockchain | |
 | Chosen AI Approach | |
 
 ## Module Tracking
