@@ -12,7 +12,7 @@ Update this README every week.
 | Gaizka Frutos | |
 | Gaizka8 | |
 | Dashboard Blockchain | |
-| Chosen AI Approach | |
+| Anomaly Detector | |
 
 ## Module Tracking
 
@@ -29,27 +29,31 @@ Use one of these values: `Not started`, `In progress`, `Done`
 
 Write 3 to 5 short lines about what you have already done.
 
-- 
-- 
-- 
+- Repository accepted from GitHub Classroom.
+- README initialised with project info and module status.
+- First API call implemented in api/blockchain_client.py — prints the latest
+block height, hash, difficulty, nonce, bits and transaction count from the
+Blockstream API.
 
 ## Next Step
 
 Write the next small step you will do before the next class.
 
-- 
+- Start M1 inside app.py using Streamlit: display the current difficulty and
+visualise the leading-zero threshold in the 256-bit SHA-256 space.
 
 ## Main Problem or Blocker
 
 Write here if you are stuck with something.
 
-- 
+- None yet
 
 ## How to Run
 
 ```bash
 pip install -r requirements.txt
-streamlit run app.py
+python api/blockchain_client.py      # quick sanity check
+streamlit run app.py                 # full dashboard (coming next)
 ```
 
 ## Project Structure
