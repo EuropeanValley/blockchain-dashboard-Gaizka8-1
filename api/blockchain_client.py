@@ -93,6 +93,19 @@ def get_block_txids(block_hash: str) -> list[str]:
     return _get(BLOCKSTREAM_BASE, f"/block/{block_hash}/txids")
 
 
+def get_btc_price_usd() -> float:
+    """Spot BTC/USD price from the blockchain.info ticker.
+
+    Used by M6 to convert the network's energy expenditure into a USD
+    figure. Falls back to a hard-coded approximation if the API is down.
+    """
+    try:
+        data = _get(BLOCKCHAIN_INFO_BASE, "/ticker")
+        return float(data["USD"]["last"])
+    except Exception:  # noqa: BLE001
+        return 60_000.0  # safe fallback so the dashboard keeps running
+
+
 def get_merkle_proof(txid: str) -> dict:
     """Return the Merkle inclusion proof of a transaction.
 

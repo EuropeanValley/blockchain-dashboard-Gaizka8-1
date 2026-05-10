@@ -36,6 +36,7 @@ and reporting Precision / Recall / F1 / ROC-AUC.
 - **M3 · Difficulty History** - done
 - **M4 · AI Component** - done (statistical + IsolationForest, evaluated)
 - **M5 · Merkle Proof Verifier** - done *(optional module)*
+- **M6 · Security Score** - done *(optional module — 51% attack cost + Nakamoto §11)*
 
 ## Current progress
 - All four required modules implemented and integrated into a single
@@ -70,7 +71,8 @@ instead of crashing.
 │   ├── m2_block_header.py
 │   ├── m3_difficulty_history.py
 │   ├── m4_ai_component.py
-│   └── m5_merkle_proof.py     # optional module (M5)
+│   ├── m5_merkle_proof.py     # optional module (M5)
+│   └── m6_security_score.py   # optional module (M6)
 └── report/
     └── cryptochain_report.pdf
 ```
@@ -123,6 +125,18 @@ across blocks #100 000, #500 000 and #800 000 — all roots match the
 ones reported by the network. This is the cryptographic foundation of
 SPV (Simplified Payment Verification, Section 8 of the Bitcoin
 whitepaper).
+
+### M6 · Security Score (optional)
+Live estimate of the cost of a 51% attack on Bitcoin. Combines the
+network hash rate (from M1), modern ASIC efficiency (default Antminer
+S21 at 17.5 J/TH) and an industrial electricity price to compute the
+USD-per-hour bill an attacker would need to pay just for power, plus
+the capital expenditure on hardware. The second half of the tab plots
+the closed-form Nakamoto §11 curves *P(success) vs confirmation depth*
+for several attacker hash-power fractions, and recommends the minimum
+confirmation depth needed to drop the success probability below a
+chosen safety threshold. The probability function reproduces every
+digit of Table 1 of the Bitcoin whitepaper.
 
 ## References
 - Nakamoto, S. (2008). *Bitcoin: A Peer-to-Peer Electronic Cash System.*
