@@ -23,6 +23,7 @@ from modules.m1_pow_monitor import render as render_m1
 from modules.m2_block_header import render as render_m2
 from modules.m3_difficulty_history import render as render_m3
 from modules.m4_ai_component import render as render_m4
+from modules.m5_merkle_proof import render as render_m5
 
 
 st.set_page_config(
@@ -63,11 +64,12 @@ else:
         "`pip install streamlit-autorefresh` or use the sidebar button."
     )
 
-tab1, tab2, tab3, tab4 = st.tabs([
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "M1 · Proof of Work Monitor",
     "M2 · Block Header Analyzer",
     "M3 · Difficulty History",
     "M4 · AI Anomaly Detector",
+    "M5 · Merkle Proof (extra)",
 ])
 
 with tab1:
@@ -78,6 +80,8 @@ with tab3:
     render_m3(n_periods=n_periods_m3)
 with tab4:
     render_m4(n_blocks=n_blocks_m4)
+with tab5:
+    render_m5()
 
 st.markdown("---")
 st.caption(

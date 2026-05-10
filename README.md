@@ -35,6 +35,7 @@ and reporting Precision / Recall / F1 / ROC-AUC.
 - **M2 · Block Header Analyzer** - done (verifies PoW with `hashlib`)
 - **M3 · Difficulty History** - done
 - **M4 · AI Component** - done (statistical + IsolationForest, evaluated)
+- **M5 · Merkle Proof Verifier** - done *(optional module)*
 
 ## Current progress
 - All four required modules implemented and integrated into a single
@@ -68,7 +69,8 @@ instead of crashing.
 │   ├── m1_pow_monitor.py
 │   ├── m2_block_header.py
 │   ├── m3_difficulty_history.py
-│   └── m4_ai_component.py
+│   ├── m4_ai_component.py
+│   └── m5_merkle_proof.py     # optional module (M5)
 └── report/
     └── cryptochain_report.pdf
 ```
@@ -111,6 +113,16 @@ plots both the difficulty (log scale) and the ratio
 See *Chosen AI approach* above. The statistical detector achieves
 ROC-AUC ≈ 0.97 on synthetic anomalies; the Isolation Forest is reported
 as a baseline for comparison.
+
+### M5 · Merkle Proof Verifier (optional)
+Pick any transaction in any historical block, fetch its Merkle inclusion
+proof from the API, and reconstruct the block's `merkle_root` step by
+step using double SHA-256. The implementation handles Bitcoin's quirky
+little-endian byte ordering and was tested against 12 transactions
+across blocks #100 000, #500 000 and #800 000 — all roots match the
+ones reported by the network. This is the cryptographic foundation of
+SPV (Simplified Payment Verification, Section 8 of the Bitcoin
+whitepaper).
 
 ## References
 - Nakamoto, S. (2008). *Bitcoin: A Peer-to-Peer Electronic Cash System.*

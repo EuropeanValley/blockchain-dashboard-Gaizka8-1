@@ -105,6 +105,12 @@ def build(out_path: Path) -> None:
          "Plots difficulty over the last K epochs and the ratio "
          "<i>actual / target</i> period time, illustrating the "
          "self-correcting feedback loop."],
+        ["Merkle inclusion proof",
+         "M5 (optional) — reconstructs the root step by step",
+         "Recomputes the block's <i>merkle_root</i> from any chosen "
+         "transaction by chaining double-SHA256 along the proof path. "
+         "Validated against 12 transactions in 3 historical blocks. "
+         "Foundation of SPV wallets (Bitcoin whitepaper §8)."],
     ]
     rows = [[Paragraph(c, small) for c in row] for row in metrics]
     table = Table(rows, colWidths=[3.3 * cm, 5.5 * cm, 8.0 * cm])

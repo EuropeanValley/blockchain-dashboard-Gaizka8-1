@@ -84,6 +84,31 @@ def get_latest_block() -> dict:
     return get_block_at_height(get_tip_height())
 
 
+def get_block_txids(block_hash: str) -> list[str]:
+    """Return the list of all transaction IDs in the given block.
+
+    Used by M5 to let the user pick a transaction whose Merkle proof we
+    will then reconstruct manually.
+    """
+    return _get(BLOCKSTREAM_BASE, f"/block/{block_hash}/txids")
+
+
+def get_merkle_proof(txid: str) -> dict:
+    """Return the Merkle inclusion proof of a transaction.
+
+    The Blockstream response has the shape::
+
+        {
+            "block_height": 948592,
+            "merkle":       ["sibling1_hex", "sibling2_hex", ...],
+            "pos":          27   # leaf index inside the tree
+        }
+
+    where each sibling hash is in *display* (big-endian) byte order.
+    """
+    return _get(BLOCKSTREAM_BASE, f"/tx/{txid}/merkle-proof")
+
+
 def get_difficulty_history(n_points: int = 100) -> list[dict]:
     """Difficulty time-series from blockchain.info charts API.
 

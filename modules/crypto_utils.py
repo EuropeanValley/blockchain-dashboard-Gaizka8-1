@@ -139,3 +139,67 @@ def humanize_hashrate(hps: float) -> str:
         if hps >= factor:
             return f"{hps / factor:.2f} {suffix}"
     return f"{hps:.0f} H/s"
+
+
+# ---------------------------------------------------------------------------
+# Merkle proof verification (used by M5)
+# ---------------------------------------------------------------------------
+
+def _double_sha256(b: bytes) -> bytes:
+    return hashlib.sha256(hashlib.sha256(b).digest()).digest()
+
+
+@dataclass
+class MerkleStep:
+    level: int
+    side: str           # "leaf", "left", "right"
+    sibling_be: str     # display-form sibling hash, "" for the leaf
+    current_be: str     # display-form hash AFTER this step
+
+
+def verify_merkle_proof(
+    txid_be: str,
+    siblings_be: list[str],
+    pos: int,
+) -> tuple[str, list[MerkleStep]]:
+    """Recompute a Merkle root step by step from a leaf.
+
+    Bitcoin Merkle quirks (Section 7 of the notes):
+
+    * Leaves and internal nodes are hashed with **double-SHA256**.
+    * Hashes are concatenated in their *internal* (little-endian) byte
+      order. Block explorers display them reversed, so we have to flip
+      the bytes before feeding them to SHA-256 and flip the result back.
+    * At each level, ``pos`` tells us whether ``current`` is the left
+      child (even index → sibling on the right) or the right child
+      (odd index → sibling on the left).
+
+    Returns ``(computed_root_be, steps)`` so the dashboard can render
+    each intermediate computation.
+    """
+    current = bytes.fromhex(txid_be)[::-1]  # → internal LE bytes
+
+    steps: list[MerkleStep] = [
+        MerkleStep(level=0, side="leaf", sibling_be="", current_be=txid_be)
+    ]
+
+    for level, sibling_hex in enumerate(siblings_be, start=1):
+        sibling = bytes.fromhex(sibling_hex)[::-1]
+        if pos % 2 == 0:
+            combined = current + sibling          # left || right
+            side = "right"
+        else:
+            combined = sibling + current          # left || right (we are right)
+            side = "left"
+        current = _double_sha256(combined)
+        steps.append(
+            MerkleStep(
+                level=level,
+                side=f"sibling on {side}",
+                sibling_be=sibling_hex,
+                current_be=current[::-1].hex(),
+            )
+        )
+        pos //= 2
+
+    return current[::-1].hex(), steps
